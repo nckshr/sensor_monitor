@@ -64,7 +64,11 @@ function renderRegistered(devices) {
             card.innerHTML = `
                 <div class="card-top">
                     <div class="device-info">
-                        <h3><span class="material-symbols-outlined">device_thermostat</span> ${escapeHTML(dev.name)} <span class="mac-label">${dev.mac_address}</span></h3>
+                        <h3>
+                            <span class="material-symbols-outlined">device_thermostat</span> 
+                            <input type="text" class="dev-name-input" id="name-${dev.mac_address}" value="${escapeHTML(dev.name)}">
+                            <span class="mac-label">${dev.mac_address}</span>
+                        </h3>
                         <div class="measurement-pill temp">
                             <span class="material-symbols-outlined">thermometer</span> <span class="val-temp">${temp}</span>
                         </div>
@@ -94,7 +98,7 @@ function renderRegistered(devices) {
                 </div>
                 <div class="card-actions">
                     <button class="btn-remove" onclick="removeDevice('${dev.mac_address}')">Remove</button>
-                    <button class="btn-save" onclick="updateDevice('${dev.mac_address}', '${escapeHTML(dev.name)}')">Save Thresholds</button>
+                    <button class="btn-save" onclick="updateDevice('${dev.mac_address}')">Save Device Configuration</button>
                 </div>
             `;
             list.appendChild(card);
@@ -166,7 +170,8 @@ async function addDevice(mac, name) {
     fetchData(); // Refresh immediately
 }
 
-async function updateDevice(mac, name) {
+async function updateDevice(mac) {
+    const nameVal = document.getElementById(`name-${mac}`).value.trim() || "Unknown Sensor";
     const minT = document.getElementById(`min-temp-${mac}`).value;
     const maxT = document.getElementById(`max-temp-${mac}`).value;
     const minH = document.getElementById(`min-hum-${mac}`).value;
@@ -174,7 +179,7 @@ async function updateDevice(mac, name) {
     
     const payload = {
         mac_address: mac,
-        name: name,
+        name: nameVal,
         min_temp: minT !== "" ? parseFloat(minT) : null,
         max_temp: maxT !== "" ? parseFloat(maxT) : null,
         min_hum: minH !== "" ? parseFloat(minH) : null,

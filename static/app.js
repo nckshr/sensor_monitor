@@ -98,7 +98,7 @@ function renderRegistered(devices) {
                 </div>
                 <div class="card-actions">
                     <button class="btn-remove" onclick="removeDevice('${dev.mac_address}')">Remove</button>
-                    <button class="btn-save" onclick="updateDevice('${dev.mac_address}')">Save Device Configuration</button>
+                    <button class="btn-save" onclick="updateDevice(this, '${dev.mac_address}')">Save Device Configuration</button>
                 </div>
             `;
             list.appendChild(card);
@@ -170,7 +170,7 @@ async function addDevice(mac, name) {
     fetchData(); // Refresh immediately
 }
 
-async function updateDevice(mac) {
+async function updateDevice(btn, mac) {
     const nameVal = document.getElementById(`name-${mac}`).value.trim() || "Unknown Sensor";
     const minT = document.getElementById(`min-temp-${mac}`).value;
     const maxT = document.getElementById(`max-temp-${mac}`).value;
@@ -193,7 +193,6 @@ async function updateDevice(mac) {
     });
     
     // Show success feedback
-    const btn = event.target;
     const oldText = btn.innerText;
     btn.innerText = "Saved!";
     btn.style.background = "var(--success-color)";

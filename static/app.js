@@ -1,8 +1,52 @@
 document.addEventListener("DOMContentLoaded", () => {
+    fetchTopicConfig();
     fetchData();
     // Poll every 5 seconds
     setInterval(fetchData, 5000);
 });
+
+async function fetchTopicConfig() {
+    try {
+        const res = await fetch('/api/config/ntfy');
+        if (res.ok) {
+            const data = await res.json();
+            document.getElementById('ntfy-topic-input').value = data.topic;
+        }
+    } catch (e) {
+        console.error("Error fetching topic config:", e);
+    }
+}
+
+async function updateTopic(btn) {
+    const val = document.getElementById('ntfy-topic-input').value.trim();
+    if (!val) return;
+    
+    await fetch('/api/config/ntfy', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic: val })
+    });
+    
+    const oldText = btn.innerText;
+    btn.innerText = "Saved!";
+    btn.style.background = "var(--success-color)";
+    setTimeout(() => {
+        btn.innerText = oldText;
+        btn.style.background = "";
+    }, 2000);
+}
+
+async function testTopic(btn) {
+    const oldText = btn.innerText;
+    btn.innerText = "Sending...";
+    await fetch('/api/config/ntfy/test', {
+        method: 'POST'
+    });
+    btn.innerText = "Sent!";
+    setTimeout(() => {
+        btn.innerText = oldText;
+    }, 2000);
+}
 
 async function fetchData() {
     try {

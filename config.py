@@ -36,3 +36,16 @@ PORT = config_data.get("port", 8432)
 MONITOR_FREQUENCY_MINUTES = config_data.get("monitor_frequency_minutes", 5)
 NTFY_TOPIC = config_data.get("ntfy_topic", "ntfy.sh/default_sensing_alerts")
 DEBUG_MODE = config_data.get("debug_mode", False)
+
+def update_config(key: str, value):
+    global PORT, MONITOR_FREQUENCY_MINUTES, NTFY_TOPIC, DEBUG_MODE
+    config = load_config()
+    config[key] = value
+    with open(CONFIG_FILE, 'w') as f:
+        json.dump(config, f, indent=4)
+        
+    if key == "port": PORT = value
+    elif key == "monitor_frequency_minutes": MONITOR_FREQUENCY_MINUTES = value
+    elif key == "ntfy_topic": NTFY_TOPIC = value
+    elif key == "debug_mode": DEBUG_MODE = value
+

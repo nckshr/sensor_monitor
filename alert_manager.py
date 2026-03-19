@@ -1,9 +1,9 @@
 import aiohttp
 import logging
-from config import NTFY_TOPIC, DEBUG_MODE
+import config
 
 async def send_alert(message: str, title: str = "Sensor Alert"):
-    url = f"https://{NTFY_TOPIC}"
+    url = f"https://{config.NTFY_TOPIC}"
     try:
         async with aiohttp.ClientSession() as session:
             headers = {
@@ -12,7 +12,7 @@ async def send_alert(message: str, title: str = "Sensor Alert"):
                 "Tags": "warning,thermometer"
             }
             async with session.post(url, data=message.encode('utf-8'), headers=headers) as resp:
-                if DEBUG_MODE:
+                if config.DEBUG_MODE:
                     logging.info(f"Alert sent to {url}. Response: {resp.status}")
                 if resp.status != 200:
                     logging.error(f"Failed to send alert via ntfy. HTTP {resp.status}")

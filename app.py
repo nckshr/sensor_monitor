@@ -91,6 +91,26 @@ async def api_get_discovered():
 async def api_get_history(limit: int = 100):
     return await database.get_latest_measurements(limit)
 
+class TopicConfig(BaseModel):
+    topic: str
+
+@app.get("/api/config/ntfy")
+async def api_get_topic():
+    import config
+    return {"topic": config.NTFY_TOPIC}
+
+@app.put("/api/config/ntfy")
+async def api_update_topic(data: TopicConfig):
+    import config
+    config.update_config("ntfy_topic", data.topic)
+    return {"success": True}
+
+@app.post("/api/config/ntfy/test")
+async def api_test_topic():
+    import alert_manager
+    await alert_manager.send_alert("This is a test notification from your Sensing Dashboard! The connection is working correctly.", title="Sensing Test Alert")
+    return {"success": True}
+
 # Ensure static folder exists
 os.makedirs("static", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")

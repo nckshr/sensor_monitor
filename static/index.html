@@ -20,6 +20,16 @@
     </header>
     
     <main class="dashboard-container">
+        <!-- Configuration Bar -->
+        <div class="config-bar">
+            <strong>Ntfy Topic:</strong>
+            <input type="text" id="ntfy-topic-input" class="topic-input" placeholder="ntfy.sh/your_topic..." autocomplete="off">
+            <div class="config-actions">
+                <button class="btn-save" onclick="updateTopic(this)">Update</button>
+                <button class="btn-success btn-test" onclick="testTopic(this)">Test</button>
+            </div>
+        </div>
+
         <!-- Left Pane: Registered Devices -->
         <section class="pane registered-pane">
             <div class="pane-header">

@@ -90,12 +90,64 @@ h1 {
 .dashboard-container {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
+    grid-template-rows: auto 1fr;
     gap: 24px;
     max-width: 1400px;
     margin: 32px auto;
     padding: 0 40px;
     flex: 1;
     width: 100%;
+}
+
+.config-bar {
+    grid-column: 1 / -1;
+    background: var(--pane-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px 24px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.config-bar strong {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.topic-input {
+    flex: 1;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s;
+    outline: none;
+    max-width: 500px;
+}
+.topic-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.config-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-test {
+    padding: 8px 16px;
+    border-radius: 6px;
+    width: auto;
+    height: auto;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 @media (max-width: 1024px) {

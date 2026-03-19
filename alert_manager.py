@@ -11,6 +11,8 @@ async def send_alert(message: str, title: str = "Sensor Alert"):
     else:
         url = f"https://ntfy.sh/{topic_val}"
 
+    logging.info(f"Attempting to send ntfy alert to URL: {url}")
+    
     try:
         async with aiohttp.ClientSession() as session:
             headers = {

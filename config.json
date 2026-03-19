@@ -1,0 +1,6 @@
+{
+    "port": 8432,
+    "monitor_frequency_minutes": 5,
+    "ntfy_topic": "ntfy.sh/my_secret_sensing_alerts_b39d10c2",
+    "debug_mode": false
+}

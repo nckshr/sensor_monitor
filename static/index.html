@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensing Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+    <div class="bg-decoration shape-1"></div>
+    <div class="bg-decoration shape-2"></div>
+    
+    <header class="app-header">
+        <div class="header-content">
+            <span class="material-symbols-outlined logo-icon">sensors</span>
+            <h1>Sensing Network</h1>
+        </div>
+    </header>
+    
+    <main class="dashboard-container">
+        <!-- Left Pane: Registered Devices -->
+        <section class="pane registered-pane">
+            <div class="pane-header">
+                <h2>Registered Devices</h2>
+                <div class="badge" id="registered-count">0</div>
+            </div>
+            <div id="registered-list" class="device-list">
+                 <div class="empty-state hidden">No devices registered. Add one from the right pane.</div>
+            </div>
+        </section>
+
+        <!-- Right Pane: Discovered Devices -->
+        <section class="pane discovered-pane">
+            <div class="pane-header">
+                <h2>Discovered Devices</h2>
+                <span class="material-symbols-outlined spin-icon">radar</span>
+            </div>
+            <div class="subtext">Listening for nearby Bluetooth thermometer broadcasts...</div>
+            <div id="discovered-list" class="device-list">
+                 <div class="empty-state">Scanning...</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

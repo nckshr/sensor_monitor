@@ -3,7 +3,14 @@ import logging
 import config
 
 async def send_alert(message: str, title: str = "Sensor Alert"):
-    url = f"https://{config.NTFY_TOPIC}"
+    topic_val = config.NTFY_TOPIC.strip()
+    if topic_val.startswith("http://") or topic_val.startswith("https://"):
+        url = topic_val
+    elif "/" in topic_val:
+        url = f"https://{topic_val}"
+    else:
+        url = f"https://ntfy.sh/{topic_val}"
+
     try:
         async with aiohttp.ClientSession() as session:
             headers = {
